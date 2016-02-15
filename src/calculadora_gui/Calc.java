@@ -21,7 +21,6 @@ public class Calc {
 		int cParI=-1;
 		int oParC=0;
 		int cParC=0;
-		int control=0;
 		boolean match = false;
 		boolean mapped = false;
 		int i;// 21+5+6*5
@@ -210,8 +209,6 @@ public class Calc {
 			oParI=0;
 			cParI=0;
 			oParC=0;
-			
-			control=0;
 			comStat = OpChecker(commands, priOrder);
 			System.out.println("comStat:"+comStat[0]+comStat[1]);
 		}
@@ -225,8 +222,6 @@ public class Calc {
 		oParI=0;
 		cParI=0;
 		oParC=0;
-		
-		control=0;
 		return answer;
 	}
 
@@ -247,16 +242,20 @@ public class Calc {
 					System.out.println("Se encontro la operacion:(" + op[oI] + ") en la posicion:(" + cI + ") del string");
 					return report;
 				}
-				if(commands.charAt(cI)=='-' && cI!=0 && op[oI] !='+' )
+				
+			}
+			
+		}	
+			for(cI=commands.length()-1 ;  cI > -1 ; cI-- )
+			{
+				if(commands.charAt(cI)=='-' && cI!=0  )
 				{
-					
 					report[0]="+";
 					report[1]=String.valueOf(cI);
 					report[2]="1";
 					return report;
 				}
 			}
-		}
 		report[0]="0";
 		report[1]="0";
 		report[0]="0";
