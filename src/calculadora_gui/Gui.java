@@ -78,22 +78,21 @@ public class Gui extends JFrame {
 	 * Create the frame.
 	 */
 	private JLabel lbPantalla = new JLabel("");
-		
-		
-	
-	
-	public void lbPantallaUpdater(String text){
-		if(text=="CLS"){
+	public void lbPantallaUpdater(String text)
+	{
+		if(text=="CLS")
+		{
 			lbPantalla.setText("");
 		}
 		else lbPantalla.setText(lbPantalla.getText()+text);
 	}
-	public void lbPantallaResp(String text){
+	public void lbPantallaResp(String text)
+	{
 		lbPantalla.setText(text);
 	}
-	public String lbPantallaGetter(){
-		String text = lbPantalla.getText();
-		return text;
+	public String lbPantallaGetter()
+	{
+		return lbPantalla.getText();
 	}
 	
 	private	JButton btnNum0 = new JButton("0");
@@ -108,22 +107,27 @@ public class Gui extends JFrame {
 	private JButton btnNum9 = new JButton("9");
 	private JButton btnResultado = new JButton("=");
 	private JButton btnClear = new JButton("Clear");
-	JButton btnSuma = new JButton("+");
-	JButton btnResta = new JButton("-");
-	JButton btnParIzq = new JButton("(");
-	JButton btnParDer = new JButton(")");
-	JButton btnPow = new JButton("^");
-	JButton btnMult = new JButton("*");
-	JButton btnDiv = new JButton("/");
-	JButton btnMatrixM = new JButton("MatrixMode");
-	JButton btnCos = new JButton("Cos");
-	JButton btnArCos = new JButton("ArCos");
-	JButton btnSen = new JButton("Sen");
-	JButton btnArcSen = new JButton("ArcSen");
-	JButton btnTan = new JButton("Tan");
-	JButton btnLn = new JButton("Ln");
-	JButton btnFact = new JButton("!");
-	JButton btnCuadratica = new JButton("EQN SOLVER");
+	private JButton btnSuma = new JButton("+");
+	private JButton btnResta = new JButton("-");
+	private JButton btnParIzq = new JButton("(");
+	private JButton btnParDer = new JButton(")");
+	private JButton btnPow = new JButton("^");
+	private JButton btnMult = new JButton("*");
+	private JButton btnDiv = new JButton("/");
+	private JButton btnMatrixM = new JButton("MatrixMode");
+	private JButton btnCos = new JButton("Cos");
+	private JButton btnArCos = new JButton("ArCos");
+	private JButton btnSen = new JButton("Sen");
+	private JButton btnArcSen = new JButton("ArcSen");
+	private JButton btnTan = new JButton("Tan");
+	private JButton btnLn = new JButton("Ln");
+	private JButton btnFact = new JButton("!");
+	private JButton btnCuadratica = new JButton("EQN SOLVER");
+	private JButton btnBorrar = new JButton("<-");
+	private JButton btnArcTan = new JButton("ArcTan");
+	private JButton btnMod = new JButton("Mod");
+	private JButton btnRaiz = new JButton("√");
+	private JTextField field = new JTextField();
 	Border border = BorderFactory.createEtchedBorder(1,Color.BLUE,Color.GRAY);
 	
 	
@@ -308,7 +312,7 @@ public class Gui extends JFrame {
 				contentPane.requestFocus();
 			}
 		});
-		JButton btnArcTan = new JButton("ArcTan");
+		
 		btnArcTan.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				lbPantallaUpdater(String.valueOf(calc.atan(Double.parseDouble(JOptionPane.showInputDialog(null, "x=")))));
@@ -372,7 +376,7 @@ public class Gui extends JFrame {
 		btnResultado.setBounds(151, 270, 50, 25);
 		contentPane.add(btnResultado);
 		
-		JButton btnBorrar = new JButton("<-");
+		
 		btnBorrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				lbPantallaResp(lbPantalla.getText().substring(0,lbPantalla.getText().length()-1));
@@ -418,7 +422,7 @@ public class Gui extends JFrame {
 		btnSen.setBounds(213, 210, 75, 25);
 		contentPane.add(btnSen);
 		
-		JButton btnRaiz = new JButton("√");
+		
 		btnRaiz.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				contentPane.requestFocus();
@@ -443,7 +447,7 @@ public class Gui extends JFrame {
 		btnTan.setBounds(213, 240, 75, 25);
 		contentPane.add(btnTan);
 		
-		JButton btnMod = new JButton("Mod");
+		
 		btnMod.setBounds(213, 270, 65, 25);
 		contentPane.add(btnMod);
 		lbPantalla.setBackground(UIManager.getColor("Button.light"));
@@ -479,7 +483,7 @@ public class Gui extends JFrame {
 		btnCuadratica.setBounds(70, 152, 160, 25);
 		contentPane.add(btnCuadratica);
 		contentPane.requestFocus();
-		JTextField field = new JTextField();
+		
 		field.addKeyListener(listener);
 		contentPane.add(field);
 		field.requestFocus();
