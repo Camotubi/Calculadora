@@ -14,6 +14,9 @@ public class Calc {
 		commands = commands.replaceAll("Cos","c");
 		commands = commands.replaceAll("Sin","s");
 		commands = commands.replaceAll("Tan","t");
+		commands = commands.replaceAll("ACos", "q");
+		commands = commands.replaceAll("ASen", "w");
+		commands = commands.replaceAll("ATan", "e");
 		int lFI;// left first index
 		int rLI;// right last index
 		int oParI=-1; //opening parenthesis index
@@ -103,7 +106,6 @@ public class Calc {
 		{
 			if(comStat[2]=="1")
 			{
-				
 				commands=commands.substring(0,Integer.parseInt(comStat[1]))+ "+" + commands.substring(Integer.parseInt(comStat[1]));
 				commandsLength = commands.length();
 				System.out.println("Esto es commands:" + commands);
