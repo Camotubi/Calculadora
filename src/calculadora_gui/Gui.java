@@ -18,6 +18,14 @@ import javax.swing.JOptionPane;
 import java.awt.SystemColor;
 import javax.swing.UIManager;
 import javax.swing.border.EtchedBorder;
+import javax.swing.JToolBar;
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JSeparator;
+import javax.swing.Box;
+import javax.swing.JLayeredPane;
+import javax.swing.border.BevelBorder;
 
 public class Gui extends JFrame {
 
@@ -34,6 +42,12 @@ public class Gui extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					 try 
+					    { 
+					        UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel"); 
+					    } 
+					    catch(Exception e){ 
+					    }
 					Gui frame = new Gui();
 					
 					frame.setVisible(true);
@@ -112,7 +126,6 @@ public class Gui extends JFrame {
 	private JButton btnPow = new JButton("^");
 	private JButton btnMult = new JButton("*");
 	private JButton btnDiv = new JButton("/");
-	private JButton btnMatrixM = new JButton("MatrixMode");
 	private JButton btnCos = new JButton("Cos");
 	private JButton btnArCos = new JButton("ArCos");
 	private JButton btnSen = new JButton("Sen");
@@ -120,13 +133,14 @@ public class Gui extends JFrame {
 	private JButton btnTan = new JButton("Tan");
 	private JButton btnLn = new JButton("Ln");
 	private JButton btnFact = new JButton("!");
-	private JButton btnCuadratica = new JButton("EQN SOLVER");
 	private JButton btnBorrar = new JButton("<-");
 	private JButton btnArcTan = new JButton("ArcTan");
 	private JButton btnMod = new JButton("Mod");
 	private JButton btnRaiz = new JButton("√");
 	private JTextField field = new JTextField();
 	Border border = BorderFactory.createEtchedBorder(1,Color.BLUE,Color.GRAY);
+	private final JPanel panel_1 = new JPanel();
+	private final JPanel panel_2 = new JPanel();
 	
 	
 	
@@ -137,14 +151,69 @@ public class Gui extends JFrame {
 	public Gui() {
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 346);
+		setBounds(100, 100, 434, 353);
 		contentPane = new JPanel();
 		contentPane.addKeyListener(listener);
 		contentPane.requestFocus();
+		
+		JMenuBar menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
+		
+		JMenu mnMode = new JMenu("Mode");
+		menuBar.add(mnMode);
+		
+		JMenuItem mntmEqnSolver = new JMenuItem("Eqn Solver");
+		mntmEqnSolver.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				quadra.cuadratica();
+				contentPane.requestFocus();
+			}
+		});
+		mnMode.add(mntmEqnSolver);
+		
+		JMenuItem mntmMatrix = new JMenuItem("Matrix");
+		mntmMatrix.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				EqnSolver.matrix();
+				contentPane.requestFocus();
+			}
+		});
+		mnMode.add(mntmMatrix);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		contentPane.requestFocus();
+		
+		btnClear.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				lbPantallaUpdater("CLS");
+				contentPane.requestFocus();
+			}
+		});
+		lbPantalla.setBackground(UIManager.getColor("Button.light"));
+		lbPantalla.setForeground(SystemColor.desktop);
+		lbPantalla.setBorder(new EtchedBorder(EtchedBorder.LOWERED, UIManager.getColor("MenuBar.shadow"), new Color(128, 128, 128)));
+		lbPantalla.setOpaque(true);
+		
+		lbPantalla.setBounds(27, 11, 370, 34);
+		contentPane.add(lbPantalla);
+		
+		btnClear.setBounds(27, 106, 65, 25);
+		contentPane.add(btnClear);
+		contentPane.requestFocus();
+		
+		field.addKeyListener(listener);
+		contentPane.add(field);
+		
+		JSeparator separator = new JSeparator();
+		separator.setBounds(29, 131, 183, 0);
+		contentPane.add(separator);
+		
+		JPanel panel = new JPanel();
+		panel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		panel.setBounds(27, 142, 149, 122);
+		contentPane.add(panel);
+		panel.add(btnNum1);
 		
 		btnNum1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -152,6 +221,7 @@ public class Gui extends JFrame {
 				contentPane.requestFocus();
 			}
 		});
+		panel.add(btnNum2);
 		
 		btnNum2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -159,13 +229,15 @@ public class Gui extends JFrame {
 				contentPane.requestFocus();
 			}
 		});
-		 
+		panel.add(btnNum3);
+		
 		btnNum3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				lbPantallaUpdater("3");
 				contentPane.requestFocus();
 			}
 		});
+		panel.add(btnNum4);
 		
 		btnNum4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -173,6 +245,7 @@ public class Gui extends JFrame {
 				contentPane.requestFocus();
 			}
 		});
+		panel.add(btnNum5);
 		
 		btnNum5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -180,6 +253,7 @@ public class Gui extends JFrame {
 				contentPane.requestFocus();
 			}
 		});
+		panel.add(btnNum6);
 		
 		btnNum6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -187,6 +261,7 @@ public class Gui extends JFrame {
 				contentPane.requestFocus();
 			}
 		});
+		panel.add(btnNum7);
 		
 		btnNum7.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -194,6 +269,7 @@ public class Gui extends JFrame {
 				contentPane.requestFocus();
 			}
 		});
+		panel.add(btnNum8);
 		
 		btnNum8.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -201,6 +277,7 @@ public class Gui extends JFrame {
 				contentPane.requestFocus();
 			}
 		});
+		panel.add(btnNum9);
 		
 		btnNum9.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -208,10 +285,143 @@ public class Gui extends JFrame {
 				contentPane.requestFocus();
 			}
 		});
+		panel.add(btnBorrar);
 		
-		btnNum0.addActionListener(new ActionListener() {
+		btnBorrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				lbPantallaUpdater("0");
+				lbPantallaResp(lbPantalla.getText().substring(0,lbPantalla.getText().length()-1));
+				contentPane.requestFocus();
+			}
+		});
+		panel.add(btnNum0);
+		panel.add(btnResultado);
+		panel_1.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		panel_1.setBounds(27, 56, 370, 39);
+		
+		contentPane.add(panel_1);
+		panel_1.add(btnSuma);
+		panel_1.add(btnResta);
+		panel_1.add(btnMult);
+		btnMult.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				lbPantallaUpdater("*");
+				contentPane.requestFocus();
+			}
+		});
+		panel_1.add(btnPow);
+		panel_1.add(btnDiv);
+		panel_1.add(btnRaiz);
+		panel_1.add(btnParIzq);
+		panel_1.add(btnParDer);
+		panel_2.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		panel_2.setBounds(186, 142, 194, 122);
+		
+		contentPane.add(panel_2);
+		panel_2.add(btnCos);
+		panel_2.add(btnSen);
+		btnSen.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				lbPantallaUpdater("Sin(");
+				contentPane.requestFocus();
+			}
+		});
+		panel_2.add(btnTan);
+		btnTan.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				lbPantallaUpdater("Tan(");
+				contentPane.requestFocus();
+			}
+		});
+		panel_2.add(btnArCos);
+		btnArCos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				lbPantallaUpdater(String.valueOf(calc.cos(Double.parseDouble(JOptionPane.showInputDialog(null, "x=")))));
+				contentPane.requestFocus();
+			}
+		});
+		panel_2.add(btnArcSen);
+		
+		btnArcSen.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				lbPantallaUpdater(String.valueOf(calc.asin(Double.parseDouble(JOptionPane.showInputDialog(null, "x=")))));
+				contentPane.requestFocus();
+			}
+		});
+		panel_2.add(btnArcTan);
+		
+		btnArcTan.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				lbPantallaUpdater(String.valueOf(calc.atan(Double.parseDouble(JOptionPane.showInputDialog(null, "x=")))));
+				contentPane.requestFocus();
+			}
+		});
+		panel_2.add(btnLn);
+		btnLn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				lbPantallaUpdater(String.valueOf(calc.log(Double.parseDouble(JOptionPane.showInputDialog(null, "x=")))));
+				contentPane.requestFocus();
+			}
+		});
+		
+		JButton btnLog = new JButton("Log");
+		panel_2.add(btnLog);
+		panel_2.add(btnMod);
+		panel_2.add(btnFact);
+		btnFact.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				lbPantallaUpdater(String.valueOf(calc.factorial(Integer.parseInt(JOptionPane.showInputDialog(null, "x=")))));
+				contentPane.requestFocus();
+
+			}
+		});
+		btnCos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				lbPantallaUpdater("Cos(");
+				contentPane.requestFocus();
+				contentPane.requestFocus();
+			}
+		});
+		btnParDer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				lbPantallaUpdater(")");
+				contentPane.requestFocus();
+			}
+		});
+		btnParIzq.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				lbPantallaUpdater("(");
+				contentPane.requestFocus();
+			}
+		});
+		
+		
+		btnRaiz.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				contentPane.requestFocus();
+			}
+		});
+		btnDiv.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				lbPantallaUpdater("/");
+				contentPane.requestFocus();
+			}
+		});
+		btnPow.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				lbPantallaUpdater("^");
+				contentPane.requestFocus();
+			}
+		});
+		btnResta.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				lbPantallaUpdater("-");
+				contentPane.requestFocus();
+			}
+		});
+		
+		btnSuma.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				lbPantallaUpdater("+");
 				contentPane.requestFocus();
 			}
 		});
@@ -223,267 +433,12 @@ public class Gui extends JFrame {
 			}
 		});
 		
-		btnClear.addActionListener(new ActionListener() {
+		btnNum0.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				lbPantallaUpdater("CLS");
+				lbPantallaUpdater("0");
 				contentPane.requestFocus();
 			}
 		});
-		
-		btnSuma.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				lbPantallaUpdater("+");
-				contentPane.requestFocus();
-			}
-		});
-		btnResta.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				lbPantallaUpdater("-");
-				contentPane.requestFocus();
-			}
-		});
-		btnParIzq.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				lbPantallaUpdater("(");
-				contentPane.requestFocus();
-			}
-		});
-		btnParDer.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				lbPantallaUpdater(")");
-				contentPane.requestFocus();
-			}
-		});
-		btnPow.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				lbPantallaUpdater("^");
-				contentPane.requestFocus();
-			}
-		});
-		btnMult.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				lbPantallaUpdater("*");
-				contentPane.requestFocus();
-			}
-		});
-		btnDiv.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				lbPantallaUpdater("/");
-				contentPane.requestFocus();
-			}
-		});
-		btnMatrixM.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				EqnSolver.matrix();
-				contentPane.requestFocus();
-			}
-		});
-		btnCos.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				lbPantallaUpdater("Cos(");
-				contentPane.requestFocus();
-				contentPane.requestFocus();
-			}
-		});
-		btnArCos.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				lbPantallaUpdater(String.valueOf(calc.cos(Double.parseDouble(JOptionPane.showInputDialog(null, "x=")))));
-				contentPane.requestFocus();
-			}
-		});
-		btnSen.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				lbPantallaUpdater("Sin(");
-				contentPane.requestFocus();
-			}
-		});
-		
-		btnArcSen.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				lbPantallaUpdater(String.valueOf(calc.asin(Double.parseDouble(JOptionPane.showInputDialog(null, "x=")))));
-				contentPane.requestFocus();
-			}
-		});
-		btnTan.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				lbPantallaUpdater("Tan(");
-				contentPane.requestFocus();
-			}
-		});
-		
-		btnArcTan.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				lbPantallaUpdater(String.valueOf(calc.atan(Double.parseDouble(JOptionPane.showInputDialog(null, "x=")))));
-				contentPane.requestFocus();
-			}
-		});
-		btnLn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				lbPantallaUpdater(String.valueOf(calc.log(Double.parseDouble(JOptionPane.showInputDialog(null, "x=")))));
-				contentPane.requestFocus();
-			}
-		});
-		btnFact.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				lbPantallaUpdater(String.valueOf(calc.factorial(Integer.parseInt(JOptionPane.showInputDialog(null, "x=")))));
-				contentPane.requestFocus();
-
-			}
-		});
-		btnCuadratica.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				quadra.cuadratica();
-				contentPane.requestFocus();
-			}
-		});
-		btnNum3.setBounds(151, 179, 50, 25);
-		contentPane.add(btnNum3);
-		
-		btnNum6.setBounds(151, 210, 50, 25);
-		contentPane.add(btnNum6);
-		
-		btnNum5.setBounds(89, 210, 50, 25);
-		contentPane.add(btnNum5);
-		
-		btnNum4.setBounds(27, 210, 50, 25);
-		contentPane.add(btnNum4);
-		
-		btnNum7.setBounds(25, 240, 50, 25);
-		contentPane.add(btnNum7);
-		
-		btnNum8.setBounds(151, 240, 50, 25);
-		contentPane.add(btnNum8);
-		
-		btnNum9.setBounds(89, 240, 50, 25);
-		contentPane.add(btnNum9);
-		
-		btnNum0.setBounds(89, 270, 50, 25);
-		contentPane.add(btnNum0);
-		
-	
-		
-		btnNum1.setBounds(27, 179, 50, 25);
-		contentPane.add(btnNum1);
-		
-		
-		btnNum2.setBounds(89, 179, 50, 25);
-		contentPane.add(btnNum2);
-	
-		
-		
-		btnResultado.setBounds(151, 270, 50, 25);
-		contentPane.add(btnResultado);
-		
-		
-		btnBorrar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				lbPantallaResp(lbPantalla.getText().substring(0,lbPantalla.getText().length()-1));
-				contentPane.requestFocus();
-			}
-		});
-		btnBorrar.setBounds(25, 270, 50, 25);
-		contentPane.add(btnBorrar);
-		
-		
-		btnPow.setBounds(290, 101, 50, 25);
-		contentPane.add(btnPow);
-		
-		
-		
-		btnResta.setBounds(345, 77, 50, 25);
-		contentPane.add(btnResta);
-		
-		
-		
-		
-		
-		btnDiv.setBounds(290, 126, 50, 25);
-		contentPane.add(btnDiv);
-		
-		
-		btnMult.setBounds(345, 101, 50, 25);
-		contentPane.add(btnMult);
-		
-		
-		btnCos.setBounds(213, 179, 75, 25);
-		contentPane.add(btnCos);
-		
-		
-		btnArcSen.setBounds(300, 210, 95, 25);
-		contentPane.add(btnArcSen);
-		
-		
-		btnLn.setBounds(285, 270, 55, 25);
-		contentPane.add(btnLn);
-		
-		
-		btnSen.setBounds(213, 210, 75, 25);
-		contentPane.add(btnSen);
-		
-		
-		btnRaiz.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				contentPane.requestFocus();
-			}
-		});
-		btnRaiz.setBounds(345, 126, 50, 25);
-		contentPane.add(btnRaiz);
-		
-		
-		btnArCos.setBounds(300, 179, 95, 25);
-		contentPane.add(btnArCos);
-		
-		
-		btnArcTan.setBounds(298, 240, 95, 25);
-		contentPane.add(btnArcTan);
-		
-	
-		btnFact.setBounds(345, 270, 50, 25);
-		contentPane.add(btnFact);
-		
-	
-		btnTan.setBounds(213, 240, 75, 25);
-		contentPane.add(btnTan);
-		
-		
-		btnMod.setBounds(213, 270, 65, 25);
-		contentPane.add(btnMod);
-		lbPantalla.setBackground(UIManager.getColor("Button.light"));
-		lbPantalla.setForeground(SystemColor.desktop);
-		lbPantalla.setBorder(new EtchedBorder(EtchedBorder.LOWERED, UIManager.getColor("MenuBar.shadow"), new Color(128, 128, 128)));
-		lbPantalla.setOpaque(true);
-		
-		lbPantalla.setBounds(27, 32, 370, 34);
-		contentPane.add(lbPantalla);
-		
-	
-		
-		
-		btnParIzq.setBounds(290, 152, 50, 25);
-		contentPane.add(btnParIzq);
-		
-	
-		btnParDer.setBounds(345, 152, 50, 25);
-		contentPane.add(btnParDer);
-		
-		
-		btnSuma.setBounds(290, 77, 50, 25);
-		contentPane.add(btnSuma);
-		
-		btnClear.setBounds(22, 126, 117, 25);
-		contentPane.add(btnClear);
-		
-		
-		btnMatrixM.setBounds(151, 126, 117, 25);
-		contentPane.add(btnMatrixM);
-		
-		
-		btnCuadratica.setBounds(70, 152, 160, 25);
-		contentPane.add(btnCuadratica);
-		contentPane.requestFocus();
-		
-		field.addKeyListener(listener);
-		contentPane.add(field);
 		field.requestFocus();
 		
 		

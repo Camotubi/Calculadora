@@ -2,7 +2,7 @@ package calculadora_gui;
 
 public class Calc {
 	
-	private char[] priOrder = {'c','s','t', 'q','w','e', '^','/','*','+'};//Priority Order
+	private char[] priOrder = {'c','s','t', 'q','w','r','l','L', '^','/','*','+'};//Priority Order
 	
 	public double StringToCalculations(String commands)
 	{
@@ -14,9 +14,11 @@ public class Calc {
 		commands = commands.replaceAll("Cos","c");
 		commands = commands.replaceAll("Sin","s");
 		commands = commands.replaceAll("Tan","t");
-		commands = commands.replaceAll("Acs", "q");
-		commands = commands.replaceAll("Asn", "w");
-		commands = commands.replaceAll("Atn", "e");
+		commands = commands.replaceAll("Acs", "C");
+		commands = commands.replaceAll("Asn", "S");
+		commands = commands.replaceAll("Atn", "T");
+		commands = commands.replaceAll("Ln", "l");
+		commands = commands.replaceAll("Log", "L");
 		int lFI;// left first index
 		int rLI;// right last index
 		int oParI=-1; //opening parenthesis index
@@ -170,7 +172,7 @@ public class Calc {
 				}
 				break;
 			
-			case "q":
+			case "C":
 				for(i = Integer.parseInt(comStat[1])+1; (i < commands.length())&&(!OpCheckerB(commands, priOrder ,i)); i++)
 				{
 					rNum=rNum+commands.charAt(i);
@@ -188,7 +190,7 @@ public class Calc {
 				}
 				break;
 				
-			case "w":
+			case "S":
 				for(i = Integer.parseInt(comStat[1])+1; (i < commands.length())&&(!OpCheckerB(commands, priOrder ,i)); i++)
 				{
 					rNum=rNum+commands.charAt(i);
@@ -206,7 +208,7 @@ public class Calc {
 				}
 				break;
 				
-			case "e":
+			case "T":
 				for(i = Integer.parseInt(comStat[1])+1; (i < commands.length())&&(!OpCheckerB(commands, priOrder ,i)); i++)
 				{
 					rNum=rNum+commands.charAt(i);
@@ -224,7 +226,41 @@ public class Calc {
 				}
 				break;
 				
+			case "l":
+				for(i = Integer.parseInt(comStat[1])+1; (i < commands.length())&&(!OpCheckerB(commands, priOrder ,i)); i++)
+				{
+					rNum=rNum+commands.charAt(i);
+				}
+				rLI=i;
+				System.out.println("eeerNum:"+rNum);
+				System.out.println("Commands:"+commands);
 				
+				if(Integer.parseInt(comStat[1])==0)
+				{
+					commands=String.valueOf(ln(Double.parseDouble(rNum)))+commands.substring(rLI);
+				} else
+				{
+					commands=commands.substring(0,Integer.parseInt(comStat[1]))+String.valueOf(ln(Double.parseDouble(rNum)))+commands.substring(rLI);
+				}
+				break;
+			case "L":
+				for(i = Integer.parseInt(comStat[1])+1; (i < commands.length())&&(!OpCheckerB(commands, priOrder ,i)); i++)
+				{
+					rNum=rNum+commands.charAt(i);
+				}
+				rLI=i;
+				System.out.println("eeerNum:"+rNum);
+				System.out.println("Commands:"+commands);
+				
+				if(Integer.parseInt(comStat[1])==0)
+				{
+					commands=String.valueOf(log(Double.parseDouble(rNum)))+commands.substring(rLI);
+				} else
+				{
+					commands=commands.substring(0,Integer.parseInt(comStat[1]))+String.valueOf(log(Double.parseDouble(rNum)))+commands.substring(rLI);
+				}
+				break;
+			
 			case "^":
 				
 				for(i = Integer.parseInt(comStat[1])+1; (i < commands.length())&&(!OpCheckerB(commands, priOrder ,i)); i++)
@@ -394,36 +430,34 @@ public class Calc {
 	}
 	public double log(double a)
 	{
+		return Math.log10(a);
+	}
+	public double ln(double a)
+	{
 		return Math.log(a);
 	}
 	public double acos(double a)
 	{
-		System.out.println("acos");
 		return Math.acos(a);
 	}
 	public double asin(double a)
 	{
-		System.out.println("asin");
 		return Math.asin(a);
 	}
 	public double atan(double a)
 	{
-		System.out.println("atan");
 		return Math.atan(a);
 	}
 	public double cos(double a)
 	{
-		System.out.println("cos");
 		return Math.cos(a);
 	}
 	public double sin(double a)
 	{
-		System.out.println("sin");
 		return Math.sin(a);
 	}
 	public double tan(double a)
 	{
-		System.out.println("tan");
 		return Math.tan(a);
 	}
 	public int factorial(int a)
