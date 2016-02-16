@@ -15,6 +15,7 @@ public class Calc {
 		commands = commands.replaceAll("Sin","s");
 		commands = commands.replaceAll("Tan","t");
 		commands = commands.replaceAll("ACos", "q");
+		
 		commands = commands.replaceAll("ASen", "w");
 		commands = commands.replaceAll("ATan", "e");
 		int lFI;// left first index
