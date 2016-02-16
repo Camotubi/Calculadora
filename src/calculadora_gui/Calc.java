@@ -2,7 +2,7 @@ package calculadora_gui;
 
 public class Calc {
 	
-	private char[] priOrder = {'c','s','t','^','/','*','+'};//Priority Order
+	private char[] priOrder = {'c','s','t', 'q','w','e', '^','/','*','+'};//Priority Order
 	
 	public double StringToCalculations(String commands)
 	{
@@ -14,22 +14,20 @@ public class Calc {
 		commands = commands.replaceAll("Cos","c");
 		commands = commands.replaceAll("Sin","s");
 		commands = commands.replaceAll("Tan","t");
-		commands = commands.replaceAll("ACos", "q");
-		
-		commands = commands.replaceAll("ASen", "w");
-		commands = commands.replaceAll("ATan", "e");
+		commands = commands.replaceAll("Acs", "q");
+		commands = commands.replaceAll("Asn", "w");
+		commands = commands.replaceAll("Atn", "e");
 		int lFI;// left first index
 		int rLI;// right last index
 		int oParI=-1; //opening parenthesis index
 		int cParI=-1; //closing parenthesis index
 		int cParC=0; //closing parenthesis counter
-		int commandsLength=commands.length(); //commands lenght 
 		boolean match = false; // false when  a "match"with a closing parenthesis ")" has not been found
 		boolean mapped = false; // true if the commands string has been "scanned" already for opening and closing parenthesis "(" , ")"
 		int i;
 		do
 		{
-			for(int ParI = commandsLength-1 ; ParI >-1  ; ParI--)
+			for(int ParI = commands.length()-1 ; ParI >-1  ; ParI--)
 			{
 				if(commands.charAt(ParI)==')'  && !match)
 				{
@@ -65,20 +63,20 @@ public class Calc {
 			
 			if(match){
 				System.out.println("oParI:"+ oParI+ " cParI:" + cParI);
-				if(oParI==0 && cParI==commandsLength-1)
+				if(oParI==0 && cParI==commands.length()-1)
 				{
 					match = false;
 					System.out.println("Estoy llamando a la funcionStrin"+commandsInPar);
 					
 					commands=String.valueOf(StringToCalculations(commandsInPar));
 				}else{
-					if(oParI==0 && cParI!=commandsLength-1)
+					if(oParI==0 && cParI!=commands.length()-1)
 					{
 						match = false;
 						System.out.println("oParI==0");
-						commands=StringToCalculations(commandsInPar)+commands.substring(cParI+1,commandsLength);
+						commands=StringToCalculations(commandsInPar)+commands.substring(cParI+1,commands.length());
 					}
-					if(oParI >0 &&cParI==commandsLength-1)
+					if(oParI >0 &&cParI==commands.length()-1)
 					{
 						System.out.println("HEY");
 						System.out.println("Estoy llamando a la funcionStrin"+commandsInPar);
@@ -86,12 +84,12 @@ public class Calc {
 						System.out.println("Esto es coomands:"+commands);
 						match = false;
 					}
-					if(oParI > 0 && cParI<commandsLength)
+					if(oParI > 0 && cParI<commands.length())
 					{
-						System.out.println(commandsLength-1);
+						System.out.println(commands.length()-1);
 						System.out.println("Esto es commands:"+ commands);
 						System.out.println("ESTO: es coommandsinpar: " + commandsInPar);
-						commands=commands.substring(0,oParI)+StringToCalculations(commandsInPar)+commands.substring(cParI+1,commandsLength);
+						commands=commands.substring(0,oParI)+StringToCalculations(commandsInPar)+commands.substring(cParI+1,commands.length());
 						match = false;
 					}
 				}
@@ -108,7 +106,7 @@ public class Calc {
 			if(comStat[2]=="1")
 			{
 				commands=commands.substring(0,Integer.parseInt(comStat[1]))+ "+" + commands.substring(Integer.parseInt(comStat[1]));
-				commandsLength = commands.length();
+				
 				System.out.println("Esto es commands:" + commands);
 			}
 
@@ -117,7 +115,7 @@ public class Calc {
 		
 			case "c":
 				
-				for(i = Integer.parseInt(comStat[1])+1; (i < commandsLength)&&(!OpCheckerB(commands, priOrder ,i)); i++)
+				for(i = Integer.parseInt(comStat[1])+1; (i < commands.length())&&(!OpCheckerB(commands, priOrder ,i)); i++)
 				{
 					rNum=rNum+commands.charAt(i);
 				}
@@ -136,7 +134,7 @@ public class Calc {
 				
 			case "s":
 
-				for(i = Integer.parseInt(comStat[1])+1; (i < commandsLength)&&(!OpCheckerB(commands, priOrder ,i)); i++)
+				for(i = Integer.parseInt(comStat[1])+1; (i < commands.length())&&(!OpCheckerB(commands, priOrder ,i)); i++)
 				{
 					rNum=rNum+commands.charAt(i);
 				}
@@ -146,7 +144,7 @@ public class Calc {
 				
 				if(Integer.parseInt(comStat[1])==0)
 				{
-					commands=String.valueOf(cos(Double.parseDouble(rNum)))+commands.substring(rLI);
+					commands=String.valueOf(sin(Double.parseDouble(rNum)))+commands.substring(rLI);
 				} else
 				{
 					commands=commands.substring(0,Integer.parseInt(comStat[1]))+String.valueOf(sin(Double.parseDouble(rNum)))+commands.substring(rLI);
@@ -155,7 +153,7 @@ public class Calc {
 				
 			case "t":
 
-				for(i = Integer.parseInt(comStat[1])+1; (i < commandsLength)&&(!OpCheckerB(commands, priOrder ,i)); i++)
+				for(i = Integer.parseInt(comStat[1])+1; (i < commands.length())&&(!OpCheckerB(commands, priOrder ,i)); i++)
 				{
 					rNum=rNum+commands.charAt(i);
 				}
@@ -165,16 +163,71 @@ public class Calc {
 				
 				if(Integer.parseInt(comStat[1])==0)
 				{
-					commands=String.valueOf(cos(Double.parseDouble(rNum)))+commands.substring(rLI);
+					commands=String.valueOf(tan(Double.parseDouble(rNum)))+commands.substring(rLI);
 				} else
 				{
 					commands=commands.substring(0,Integer.parseInt(comStat[1]))+String.valueOf(tan(Double.parseDouble(rNum)))+commands.substring(rLI);
 				}
 				break;
+			
+			case "q":
+				for(i = Integer.parseInt(comStat[1])+1; (i < commands.length())&&(!OpCheckerB(commands, priOrder ,i)); i++)
+				{
+					rNum=rNum+commands.charAt(i);
+				}
+				rLI=i;
+				System.out.println("rNum:"+rNum);
+				System.out.println("Commands:"+commands);
+				
+				if(Integer.parseInt(comStat[1])==0)
+				{
+					commands=String.valueOf(acos(Double.parseDouble(rNum)))+commands.substring(rLI);
+				} else
+				{
+					commands=commands.substring(0,Integer.parseInt(comStat[1]))+String.valueOf(acos(Double.parseDouble(rNum)))+commands.substring(rLI);
+				}
+				break;
+				
+			case "w":
+				for(i = Integer.parseInt(comStat[1])+1; (i < commands.length())&&(!OpCheckerB(commands, priOrder ,i)); i++)
+				{
+					rNum=rNum+commands.charAt(i);
+				}
+				rLI=i;
+				System.out.println("rNum:"+rNum);
+				System.out.println("Commands:"+commands);
+				
+				if(Integer.parseInt(comStat[1])==0)
+				{
+					commands=String.valueOf(asin(Double.parseDouble(rNum)))+commands.substring(rLI);
+				} else
+				{
+					commands=commands.substring(0,Integer.parseInt(comStat[1]))+String.valueOf(asin(Double.parseDouble(rNum)))+commands.substring(rLI);
+				}
+				break;
+				
+			case "e":
+				for(i = Integer.parseInt(comStat[1])+1; (i < commands.length())&&(!OpCheckerB(commands, priOrder ,i)); i++)
+				{
+					rNum=rNum+commands.charAt(i);
+				}
+				rLI=i;
+				System.out.println("eeerNum:"+rNum);
+				System.out.println("Commands:"+commands);
+				
+				if(Integer.parseInt(comStat[1])==0)
+				{
+					commands=String.valueOf(atan(Double.parseDouble(rNum)))+commands.substring(rLI);
+				} else
+				{
+					commands=commands.substring(0,Integer.parseInt(comStat[1]))+String.valueOf(atan(Double.parseDouble(rNum)))+commands.substring(rLI);
+				}
+				break;
+				
 				
 			case "^":
 				
-				for(i = Integer.parseInt(comStat[1])+1; (i < commandsLength)&&(!OpCheckerB(commands, priOrder ,i)); i++)
+				for(i = Integer.parseInt(comStat[1])+1; (i < commands.length())&&(!OpCheckerB(commands, priOrder ,i)); i++)
 				{
 					rNum=rNum+commands.charAt(i);
 				}
@@ -191,7 +244,7 @@ public class Calc {
 				
 			case "/":
 
-				for(i = Integer.parseInt(comStat[1])+1; (i < commandsLength)&&(!OpCheckerB(commands, priOrder ,i)); i++)
+				for(i = Integer.parseInt(comStat[1])+1; (i < commands.length())&&(!OpCheckerB(commands, priOrder ,i)); i++)
 				{
 					rNum=rNum+commands.charAt(i);
 				}
@@ -210,7 +263,7 @@ public class Calc {
 				
 			case "*":
 			
-				for(i = Integer.parseInt(comStat[1])+1; (i < commandsLength)&&(!OpCheckerB(commands, priOrder ,i)); i++)
+				for(i = Integer.parseInt(comStat[1])+1; (i < commands.length())&&(!OpCheckerB(commands, priOrder ,i)); i++)
 				{
 					rNum=rNum+commands.charAt(i);
 				}
@@ -230,7 +283,7 @@ public class Calc {
 			case "+":	
 			case"-":
 				
-				for(i = Integer.parseInt(comStat[1])+1; (i < commandsLength)&&(!OpCheckerB(commands, priOrder ,i)); i++)
+				for(i = Integer.parseInt(comStat[1])+1; (i < commands.length())&&(!OpCheckerB(commands, priOrder ,i)); i++)
 				{
 					rNum=rNum+commands.charAt(i);
 				}
@@ -345,26 +398,32 @@ public class Calc {
 	}
 	public double acos(double a)
 	{
+		System.out.println("acos");
 		return Math.acos(a);
 	}
 	public double asin(double a)
 	{
+		System.out.println("asin");
 		return Math.asin(a);
 	}
 	public double atan(double a)
 	{
+		System.out.println("atan");
 		return Math.atan(a);
 	}
 	public double cos(double a)
 	{
+		System.out.println("cos");
 		return Math.cos(a);
 	}
 	public double sin(double a)
 	{
+		System.out.println("sin");
 		return Math.sin(a);
 	}
 	public double tan(double a)
 	{
+		System.out.println("tan");
 		return Math.tan(a);
 	}
 	public int factorial(int a)
