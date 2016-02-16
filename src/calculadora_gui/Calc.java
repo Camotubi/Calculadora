@@ -12,8 +12,8 @@ public class Calc {
 		String lNum= "";
 		String commandsInPar="";
 		commands = commands.replaceAll("Cos","c");
-		commands = commands.replaceAll("Cos","s");
-		commands = commands.replaceAll("Cos","t");
+		commands = commands.replaceAll("Sin","s");
+		commands = commands.replaceAll("Tan","t");
 		System.out.println("Commands al inicio de todos los tiempos:"+ commands);
 		int lFI;// left first index
 		int rLI;// right last index
@@ -86,15 +86,12 @@ public class Calc {
 				}
 				if(oParI > 0 && cParI<commands.length())
 				{
-					
 					System.out.println(commands.length()-1);
 					System.out.println("Esto es commands:"+ commands);
 					System.out.println("ESTO: es coommandsinpar: " + commandsInPar);
 					commands=commands.substring(0,oParI)+StringToCalculations(commandsInPar)+commands.substring(cParI+1,commands.length());
-					
 					match = false;
 				}
-				
 			}
 			cParC--;
 		}
@@ -122,10 +119,64 @@ public class Calc {
 					rNum=rNum+commands.charAt(i);
 				}
 				rLI=i;
-				System.out.println(commands);
-				commands= commands.substring(Integer.parseInt(comStat[1])-1) + String.valueOf(cos(Double.parseDouble(rNum)))+commands.substring(rLI);
-				System.out.println(commands);
+				System.out.println("rNum:"+rNum);
+				System.out.println("Commands:"+commands);
+				
+				if(Integer.parseInt(comStat[1])==0)
+				{
+					commands=String.valueOf(cos(Double.parseDouble(rNum)))+commands.substring(rLI);
+				} else
+				{
+					commands=commands.substring(0,Integer.parseInt(comStat[1]))+String.valueOf(cos(Double.parseDouble(rNum)))+commands.substring(rLI);
+				}
+					System.out.println(commands);
 			}
+			
+			
+			if(comStat[0].equals("s"))
+			{
+				
+				for(i = Integer.parseInt(comStat[1])+1; (i < commands.length())&&(!OpCheckerB(commands, priOrder ,i)); i++)
+				{
+					rNum=rNum+commands.charAt(i);
+				}
+				rLI=i;
+				System.out.println("rNum:"+rNum);
+				System.out.println("Commands:"+commands);
+				
+				if(Integer.parseInt(comStat[1])==0)
+				{
+					commands=String.valueOf(cos(Double.parseDouble(rNum)))+commands.substring(rLI);
+				} else
+				{
+					commands=commands.substring(0,Integer.parseInt(comStat[1]))+String.valueOf(sin(Double.parseDouble(rNum)))+commands.substring(rLI);
+				}
+					System.out.println(commands);
+			}
+			
+			
+			if(comStat[0].equals("t"))
+			{
+				
+				for(i = Integer.parseInt(comStat[1])+1; (i < commands.length())&&(!OpCheckerB(commands, priOrder ,i)); i++)
+				{
+					rNum=rNum+commands.charAt(i);
+				}
+				rLI=i;
+				System.out.println("rNum:"+rNum);
+				System.out.println("Commands:"+commands);
+				
+				if(Integer.parseInt(comStat[1])==0)
+				{
+					commands=String.valueOf(cos(Double.parseDouble(rNum)))+commands.substring(rLI);
+				} else
+				{
+					commands=commands.substring(0,Integer.parseInt(comStat[1]))+String.valueOf(tan(Double.parseDouble(rNum)))+commands.substring(rLI);
+				}
+					System.out.println(commands);
+			}
+			
+			
 			
 			if(comStat[0].equals("^"))
 			{
