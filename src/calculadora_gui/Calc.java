@@ -14,20 +14,18 @@ public class Calc {
 		commands = commands.replaceAll("Cos","c");
 		commands = commands.replaceAll("Sin","s");
 		commands = commands.replaceAll("Tan","t");
-		System.out.println("Commands al inicio de todos los tiempos:"+ commands);
 		int lFI;// left first index
 		int rLI;// right last index
-		int oParI=-1;
-		int cParI=-1;
-		int oParC=0;
-		int cParC=0;
-		int commandsLenght=commands.length();
-		boolean match = false;
-		boolean mapped = false;
-		int i;// 21+5+6*5
+		int oParI=-1; //opening parenthesis index
+		int cParI=-1; //closing parenthesis index
+		int cParC=0; //closing parenthesis counter
+		int commandsLength=commands.length(); //commands lenght 
+		boolean match = false; // false when  a "match"with a closing parenthesis ")" has not been found
+		boolean mapped = false; // true if the commands string has been "scanned" already for opening and closing parenthesis "(" , ")"
+		int i;
 		do
 		{
-			for(int ParI = commandsLenght-1 ; ParI >-1  ; ParI--)
+			for(int ParI = commandsLength-1 ; ParI >-1  ; ParI--)
 			{
 				if(commands.charAt(ParI)==')'  && !match)
 				{
@@ -46,7 +44,6 @@ public class Calc {
 				
 				if(commands.charAt(ParI)=='(' && !match)
 				{
-					oParC++;
 					match = true;
 					System.out.println("ParI"+ParI);
 					oParI=ParI;
@@ -55,28 +52,29 @@ public class Calc {
 					commandsInPar = commands.substring(oParI+1,cParI);
 					System.out.println("commandsInPar:" + commandsInPar);
 				}
-				System.out.println("oParC:" + oParC + " cParC:" + cParC );
+				System.out.println( "cParC:" + cParC );
 				System.out.println("oParI:"+ oParI+ " cParI:" + cParI);
 				
 			}
+			
 			mapped = true;
-		
+			
 			if(match){
 				System.out.println("oParI:"+ oParI+ " cParI:" + cParI);
-				if(oParI==0 && cParI==commandsLenght-1)
+				if(oParI==0 && cParI==commandsLength-1)
 				{
 					match = false;
 					System.out.println("Estoy llamando a la funcionStrin"+commandsInPar);
 					
 					commands=String.valueOf(StringToCalculations(commandsInPar));
 				}else{
-					if(oParI==0 && cParI!=commandsLenght-1)
+					if(oParI==0 && cParI!=commandsLength-1)
 					{
 						match = false;
 						System.out.println("oParI==0");
-						commands=StringToCalculations(commandsInPar)+commands.substring(cParI+1,commandsLenght);
+						commands=StringToCalculations(commandsInPar)+commands.substring(cParI+1,commandsLength);
 					}
-					if(oParI >0 &&cParI==commandsLenght-1)
+					if(oParI >0 &&cParI==commandsLength-1)
 					{
 						System.out.println("HEY");
 						System.out.println("Estoy llamando a la funcionStrin"+commandsInPar);
@@ -84,12 +82,12 @@ public class Calc {
 						System.out.println("Esto es coomands:"+commands);
 						match = false;
 					}
-					if(oParI > 0 && cParI<commandsLenght)
+					if(oParI > 0 && cParI<commandsLength)
 					{
-						System.out.println(commandsLenght-1);
+						System.out.println(commandsLength-1);
 						System.out.println("Esto es commands:"+ commands);
 						System.out.println("ESTO: es coommandsinpar: " + commandsInPar);
-						commands=commands.substring(0,oParI)+StringToCalculations(commandsInPar)+commands.substring(cParI+1,commandsLenght);
+						commands=commands.substring(0,oParI)+StringToCalculations(commandsInPar)+commands.substring(cParI+1,commandsLength);
 						match = false;
 					}
 				}
@@ -100,21 +98,23 @@ public class Calc {
 				
 		}while(cParC>0);
 		
-		System.out.print("");
 		comStat = OpChecker(commands, priOrder);
 		while(comStat[0]!="0")//While there are remaining operations
 		{
-			if(comStat[2]=="1")// Si hay algun negativo que no este en la posicion 0 del array, introduce un "+" alfrente de el
+			if(comStat[2]=="1")
 			{
 				
 				commands=commands.substring(0,Integer.parseInt(comStat[1]))+ "+" + commands.substring(Integer.parseInt(comStat[1]));
+				commandsLength = commands.length();
 				System.out.println("Esto es commands:" + commands);
 			}
-			
-			if(comStat[0].equals("c"))
+
+			switch(comStat[0])
 			{
-				System.out.println("lleguewey");
-				for(i = Integer.parseInt(comStat[1])+1; (i < commandsLenght)&&(!OpCheckerB(commands, priOrder ,i)); i++)
+		
+			case "c":
+				
+				for(i = Integer.parseInt(comStat[1])+1; (i < commandsLength)&&(!OpCheckerB(commands, priOrder ,i)); i++)
 				{
 					rNum=rNum+commands.charAt(i);
 				}
@@ -129,14 +129,11 @@ public class Calc {
 				{
 					commands=commands.substring(0,Integer.parseInt(comStat[1]))+String.valueOf(cos(Double.parseDouble(rNum)))+commands.substring(rLI);
 				}
-					System.out.println(commands);
-			}
-			
-			
-			if(comStat[0].equals("s"))
-			{
+				break;
 				
-				for(i = Integer.parseInt(comStat[1])+1; (i < commandsLenght)&&(!OpCheckerB(commands, priOrder ,i)); i++)
+			case "s":
+
+				for(i = Integer.parseInt(comStat[1])+1; (i < commandsLength)&&(!OpCheckerB(commands, priOrder ,i)); i++)
 				{
 					rNum=rNum+commands.charAt(i);
 				}
@@ -151,14 +148,11 @@ public class Calc {
 				{
 					commands=commands.substring(0,Integer.parseInt(comStat[1]))+String.valueOf(sin(Double.parseDouble(rNum)))+commands.substring(rLI);
 				}
-					System.out.println(commands);
-			}
-			
-			
-			if(comStat[0].equals("t"))
-			{
+				break;
 				
-				for(i = Integer.parseInt(comStat[1])+1; (i < commandsLenght)&&(!OpCheckerB(commands, priOrder ,i)); i++)
+			case "t":
+
+				for(i = Integer.parseInt(comStat[1])+1; (i < commandsLength)&&(!OpCheckerB(commands, priOrder ,i)); i++)
 				{
 					rNum=rNum+commands.charAt(i);
 				}
@@ -173,14 +167,11 @@ public class Calc {
 				{
 					commands=commands.substring(0,Integer.parseInt(comStat[1]))+String.valueOf(tan(Double.parseDouble(rNum)))+commands.substring(rLI);
 				}
-					System.out.println(commands);
-			}
-			
-			
-			
-			if(comStat[0].equals("^"))
-			{
-				for(i = Integer.parseInt(comStat[1])+1; (i < commandsLenght)&&(!OpCheckerB(commands, priOrder ,i)); i++)
+				break;
+				
+			case "^":
+				
+				for(i = Integer.parseInt(comStat[1])+1; (i < commandsLength)&&(!OpCheckerB(commands, priOrder ,i)); i++)
 				{
 					rNum=rNum+commands.charAt(i);
 				}
@@ -192,13 +183,12 @@ public class Calc {
 				if(i<0){
 					lFI=0;
 				}else {lFI=i+1;}
-	
-				
 				commands=commands.substring(0,lFI)+String.valueOf(pow(Double.parseDouble(lNum),Double.parseDouble(rNum)))+commands.substring(rLI);
-			}
-			if(comStat[0].equals("/"))
-			{
-				for(i = Integer.parseInt(comStat[1])+1; (i < commandsLenght)&&(!OpCheckerB(commands, priOrder ,i)); i++)
+				break;
+				
+			case "/":
+
+				for(i = Integer.parseInt(comStat[1])+1; (i < commandsLength)&&(!OpCheckerB(commands, priOrder ,i)); i++)
 				{
 					rNum=rNum+commands.charAt(i);
 				}
@@ -213,10 +203,11 @@ public class Calc {
 					lFI=0;
 				}else {lFI=i+1;}
 				commands=commands.substring(0,lFI)+String.valueOf(div(Double.parseDouble(lNum),Double.parseDouble(rNum)))+commands.substring(rLI);
-			}
-			if(comStat[0].equals("*") )
-			{
-				for(i = Integer.parseInt(comStat[1])+1; (i < commandsLenght)&&(!OpCheckerB(commands, priOrder ,i)); i++)
+				break;
+				
+			case "*":
+			
+				for(i = Integer.parseInt(comStat[1])+1; (i < commandsLength)&&(!OpCheckerB(commands, priOrder ,i)); i++)
 				{
 					rNum=rNum+commands.charAt(i);
 				}
@@ -231,11 +222,12 @@ public class Calc {
 				}else {lFI=i+1;}
 			
 				commands=commands.substring(0,lFI)+String.valueOf(mult(Double.parseDouble(lNum),Double.parseDouble(rNum)))+commands.substring(rLI);
-			}
-		
-			if(comStat[0].equals("+") || comStat[0].equals("-"))
-			{
-				for(i = Integer.parseInt(comStat[1])+1; (i < commandsLenght)&&(!OpCheckerB(commands, priOrder ,i)); i++)
+				break;
+				
+			case "+":	
+			case"-":
+				
+				for(i = Integer.parseInt(comStat[1])+1; (i < commandsLength)&&(!OpCheckerB(commands, priOrder ,i)); i++)
 				{
 					rNum=rNum+commands.charAt(i);
 				}
@@ -245,21 +237,22 @@ public class Calc {
 				{
 					lNum=commands.charAt(i)+lNum;
 				}
+				System.out.println("rNum:" +rNum + " lNum:"+ lNum);
 				if(i<0){
 					lFI=0;
 				}else {lFI=i+1;}
 				commands=commands.substring(0,lFI)+String.valueOf(sum(Double.parseDouble(lNum),Double.parseDouble(rNum)))+commands.substring(rLI);
+				break;
+				
+				default: break;
 			}
-			System.out.println(commands);
-			System.out.println(rNum);
-			System.out.println(lNum);
+		
 			rNum="";
 			lNum="";
 			lFI=0;
 			rLI=0;
 			oParI=0;
 			cParI=0;
-			oParC=0;
 			comStat = OpChecker(commands, priOrder);
 			System.out.println("comStat:"+comStat[0]+comStat[1]);
 		}
@@ -272,7 +265,6 @@ public class Calc {
 		System.out.println("termine");
 		oParI=0;
 		cParI=0;
-		oParC=0;
 		return answer;
 	}
 
@@ -280,7 +272,7 @@ public class Calc {
 	{
 		String[] report = new String[3];
 		int cI;//Commands index
-		int oI;//op Index
+		int oI;//operation Index
 		for(oI=0 ;  oI < op.length ; oI++)
 		{
 			for(cI=commands.length()-1 ;  cI > -1 ; cI-- )
