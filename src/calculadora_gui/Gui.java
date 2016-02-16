@@ -67,9 +67,7 @@ public class Gui extends JFrame {
 	@Override
 	public void keyTyped(KeyEvent event) 
 		{
-		    
 		    lbPantallaUpdater(""+ event.getKeyChar());
-		    System.out.println("hola");
 		}
 	
 	};
@@ -282,7 +280,7 @@ public class Gui extends JFrame {
 		});
 		btnCos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				lbPantallaUpdater(String.valueOf(calc.cos(Double.parseDouble(JOptionPane.showInputDialog(null, "x=")))));
+				lbPantallaUpdater("Cos(");
 				contentPane.requestFocus();
 				contentPane.requestFocus();
 			}
@@ -295,7 +293,7 @@ public class Gui extends JFrame {
 		});
 		btnSen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				lbPantallaUpdater(String.valueOf(calc.sin(Double.parseDouble(JOptionPane.showInputDialog(null, "x=")))));
+				lbPantallaUpdater("Sin(");
 				contentPane.requestFocus();
 			}
 		});
@@ -308,7 +306,7 @@ public class Gui extends JFrame {
 		});
 		btnTan.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				lbPantallaUpdater(String.valueOf(calc.tan(Double.parseDouble(JOptionPane.showInputDialog(null, "x=")))));
+				lbPantallaUpdater("Tan(");
 				contentPane.requestFocus();
 			}
 		});
