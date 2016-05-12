@@ -1,4 +1,3 @@
-package calculadora_gui;
 import java.awt.EventQueue;
 import javax.swing.border.Border;
 import javax.swing.JFrame;
@@ -51,6 +50,8 @@ public class Gui extends JFrame {
 					Gui frame = new Gui();
 					
 					frame.setVisible(true);
+					frame.setSize(400,400);
+
 					
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -141,8 +142,7 @@ public class Gui extends JFrame {
 	Border border = BorderFactory.createEtchedBorder(1,Color.BLUE,Color.GRAY);
 	private final JPanel panel_1 = new JPanel();
 	private final JPanel panel_2 = new JPanel();
-	
-	
+
 	
 	
 	
@@ -198,7 +198,7 @@ public class Gui extends JFrame {
 		lbPantalla.setBounds(27, 11, 370, 34);
 		contentPane.add(lbPantalla);
 		
-		btnClear.setBounds(27, 106, 65, 25);
+		btnClear.setBounds(27, 106, 100, 25);
 		contentPane.add(btnClear);
 		contentPane.requestFocus();
 		
@@ -211,7 +211,7 @@ public class Gui extends JFrame {
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		panel.setBounds(27, 142, 149, 122);
+		panel.setBounds(27, 142, 149, 190);
 		contentPane.add(panel);
 		panel.add(btnNum1);
 		
@@ -296,10 +296,11 @@ public class Gui extends JFrame {
 		panel.add(btnNum0);
 		panel.add(btnResultado);
 		panel_1.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		panel_1.setBounds(27, 56, 370, 39);
+		panel_1.setBounds(27, 56, 370, 80);
 		
 		contentPane.add(panel_1);
 		panel_1.add(btnSuma);
+
 		panel_1.add(btnResta);
 		panel_1.add(btnMult);
 		btnMult.addActionListener(new ActionListener() {
@@ -313,8 +314,9 @@ public class Gui extends JFrame {
 		panel_1.add(btnRaiz);
 		panel_1.add(btnParIzq);
 		panel_1.add(btnParDer);
+		panel_1.add(btnClear);
 		panel_2.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		panel_2.setBounds(186, 142, 194, 122);
+		panel_2.setBounds(186, 142, 194, 190);
 		
 		contentPane.add(panel_2);
 		panel_2.add(btnCos);
@@ -440,7 +442,7 @@ public class Gui extends JFrame {
 			}
 		});
 		field.requestFocus();
-		
+
 		
 		
 	}
