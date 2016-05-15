@@ -1,5 +1,10 @@
 package calculadora_gui;
-
+	public static final String COSINE ="c";
+	public static final String SINE	= "s";
+	public static final String TANGENT= "s";
+	public static final String ARCOSINE = "s";
+	public static final String ARCSINE = "s";
+	public static final String ARCTANGENT= "s";
 public class Calc {
 	
 	private char[] priOrder = {'c','s','t', 'q','w','r','l','L', '^','/','*','+'};//Priority Order
