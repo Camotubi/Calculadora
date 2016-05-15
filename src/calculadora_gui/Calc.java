@@ -1,12 +1,14 @@
 package calculadora_gui;
+
+public class Calc {
 	public static final String COSINE ="c";
 	public static final String SINE	= "s";
-	public static final String TANGENT= "s";
-	public static final String ARCOSINE = "s";
-	public static final String ARCSINE = "s";
-	public static final String ARCTANGENT= "s";
-public class Calc {
-	
+	public static final String TANGENT= "t";
+	public static final String ARCOSINE = "C";
+	public static final String ARCSINE = "S";
+	public static final String ARCTANGENT= "T";
+	public static final String NATURAL_LOG= "l";
+	public static final String LOG= "L";
 	private char[] priOrder = {'c','s','t', 'q','w','r','l','L', '^','/','*','+'};//Priority Order
 	
 	public double StringToCalculations(String commands)
@@ -53,10 +55,8 @@ public class Calc {
 				
 				if(commands.charAt(ParI)=='(' && !match)
 				{
-					match = true;
-					System.out.println("ParI"+ParI);
-					oParI=ParI;
-					System.out.println("HWEEoParI:"+ oParI+ " cParI:" + cParI);
+					match = true;	
+					oParI=ParI;	
 					System.out.println(commands);
 					commandsInPar = commands.substring(oParI+1,cParI);
 					System.out.println("commandsInPar:" + commandsInPar);
@@ -365,33 +365,33 @@ public class Calc {
 		return answer;
 	}
 
-	public  String[] OpChecker(String commands,char[] op)//Checks for operations in the string attending to the order of priority and returns where is it.
+	public  String[] OpChecker(String expression,char[] priorityOrder)//Checks for operations in the string attending to the order of priority and returns where is it.
 	{
 		String[] report = new String[3];
-		int cI;//Commands index
-		int oI;//operation Index
-		for(oI=0 ;  oI < op.length ; oI++)
+		int expressionIndex;//expression index
+		int priorityOrderIndex;//operation Index
+		for(priorityOrderIndex=0 ;  priorityOrderIndex < priorityOrder.length ; priorityOrderIndex++)
 		{
-			for(cI=commands.length()-1 ;  cI > -1 ; cI-- )
+			for(expressionIndex=expression.length()-1 ;  expressionIndex > -1 ; expressionIndex-- )
 			{
-				if(commands.charAt(cI)==op[oI])
+				if(expression.charAt(expressionIndex)==priorityOrder[priorityOrderIndex])
 				{
-					report[0]=String.valueOf(op[oI]);
-					report[1]=String.valueOf(cI);
+					report[0]=String.valueOf(priorityOrder[priorityOrderIndex]);
+					report[1]=String.valueOf(expressionIndex);
 					report[2]="0";
-					System.out.println("Se encontro la operacion:(" + op[oI] + ") en la posicion:(" + cI + ") del string");
+					System.out.println("Se encontro la operacion :(" + priorityOrder[priorityOrderIndex] + ") en la posicion:(" + expressionIndex + ") del string");
 					return report;
 				}
 				
 			}
 			
 		}	
-			for(cI=commands.length()-1 ;  cI > -1 ; cI-- )
+			for(expressionIndex=expression.length()-1 ;  expressionIndex > -1 ; expressionIndex-- )
 			{
-				if(commands.charAt(cI)=='-' && cI!=0  )
+				if(expression.charAt(expressionIndex)=='-' && expressionIndex!=0  )
 				{
 					report[0]="+";
-					report[1]=String.valueOf(cI);
+					report[1]=String.valueOf(expressionIndex);
 					report[2]="1";
 					return report;
 				}
@@ -399,77 +399,64 @@ public class Calc {
 		report[0]="0";
 		report[1]="0";
 		report[0]="0";
-		System.out.println("No Se encontro ninguna operacion restante   en la string");
+		System.out.println("No Se encontro ninguna operacion restante en la string");
 		return report;
 	}	
-	public  boolean OpCheckerB(String commands,char[] op,int cIS)// Check for operation in A SPOT, return true or false
+
+	public  boolean OpCheckerB(String commands,char[] operations,int cIS)// Check for operation in A SPOT, return true or false
 	{
 		
-		int oI;//op Index
-		for(oI=0 ;  oI < op.length ; oI++)
+		int operationsIndex;//op Index
+		for(operationsIndex=0 ;  operationsIndex < operations.length ; operationsIndex++)
 		{
-			if(commands.charAt(cIS)==op[oI])
+			if(commands.charAt(cIS)==operations[operationsIndex])
 			{
-				System.out.println("OpCheckerB:Se encontro la operacion:(" + op[oI] + ") en la posicion:(" + cIS + ") del string");
+				System.out.println("OpCheckerB:Se encontro la operacion:(" + operations[operationsIndex] + ") en la posicion:(" + cIS + ") del string");
 				return true;
 			}
 		}
 		System.out.println("OpCheckerB:No Se encontro ninguna operacion restante en la posicion: "+ cIS+ " la string");
 		return false;
 	}
-	public double pow(double base, double exp)
-	{
+	public double pow(double base, double exp){
 		return Math.pow(base,exp);
 	}
-	public double mult(double a, double b)
-	{
+	public double mult(double a, double b){
 		return a*b;
 	}
-	public double div(double num, double denom)
-	{
+	public double div(double num, double denom){
 		return num/denom;
 	}
-	public double sum(double a, double b)
-	{
+	public double sum(double a, double b){
 		return a+b;
 	}
-	public double log(double a)
-	{
+	public double log(double a){
 		return Math.log10(a);
 	}
-	public double ln(double a)
-	{
+	public double ln(double a){
 		return Math.log(a);
 	}
-	public double acos(double a)
-	{
+	public double acos(double a){
 		return Math.acos(a);
 	}
-	public double asin(double a)
-	{
+	public double asin(double a){
 		return Math.asin(a);
 	}
-	public double atan(double a)
-	{
+	public double atan(double a){
 		return Math.atan(a);
 	}
-	public double cos(double a)
-	{
+	public double cos(double a){
 		return Math.cos(a);
 	}
-	public double sin(double a)
-	{
+	public double sin(double a){
 		return Math.sin(a);
 	}
-	public double tan(double a)
-	{
+	public double tan(double a){
 		return Math.tan(a);
 	}
-	public int factorial(int a)
-	{
+	public int factorial(int a){
 		int result=a;
-		for(int i=1; i<a;i++)
-		{
+		for(int i=1; i<a;i++){
 			result= result*(a-i);
 		}
 		return result;

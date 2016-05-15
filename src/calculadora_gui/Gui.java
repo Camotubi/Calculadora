@@ -1,3 +1,7 @@
+import calculadora_gui.Calc;
+import calculadora_gui.Cuadratica;
+import calculadora_gui.reducetoechelon;
+
 import java.awt.EventQueue;
 import javax.swing.border.Border;
 import javax.swing.JFrame;
